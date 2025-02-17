@@ -14,6 +14,17 @@ public class DeliveryCalculatorTests {
         calculator = new priceCalculator();
     }
 
+    @Test
+    @Tag("Smoke")
+    @DisplayName("Проверки успешного расчета стоимости доставки")
+    void checkCalculating() {
+        int minSum = 400;
+        assertEquals(minSum, calculator.calcPrice(1.0, priceCalculator.Size.SMALL, false, priceCalculator.WorkloadList.NORMAL));
+        assertEquals(700, calculator.calcPrice(50.0, priceCalculator.Size.BIG, false, priceCalculator.WorkloadList.VERY_HIGH_LOAD));
+        assertEquals(1120, calculator.calcPrice(20.0, priceCalculator.Size.BIG, true, priceCalculator.WorkloadList.HIGHEST_LOAD));
+
+    }
+
     @ParameterizedTest
     @MethodSource("paramsMoreThan30")
     @DisplayName("Проверки расчета коэффициента расстояния для >30 км")
@@ -85,14 +96,4 @@ public class DeliveryCalculatorTests {
         assertThrows(Exception.class, () -> calculator.calcPrice(35.0, priceCalculator.Size.SMALL, true, priceCalculator.WorkloadList.NORMAL));
     }
 
-    @Test
-    @Tag("Smoke")
-    @DisplayName("Проверки успешного расчета стоимости доставки")
-    void checkCalculating() {
-        int minSum = 400;
-        assertEquals(minSum, calculator.calcPrice(1.0, priceCalculator.Size.SMALL, false, priceCalculator.WorkloadList.NORMAL));
-        assertEquals(700, calculator.calcPrice(50.0, priceCalculator.Size.BIG, false, priceCalculator.WorkloadList.VERY_HIGH_LOAD));
-        assertEquals(1120, calculator.calcPrice(20.0, priceCalculator.Size.BIG, true, priceCalculator.WorkloadList.HIGHEST_LOAD));
-
-    }
 }
